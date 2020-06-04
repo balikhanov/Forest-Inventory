@@ -1,0 +1,84 @@
+\renewcommand\chaptername{}
+\chapter{RESULTS AND DISCUSSION}
+
+This section presents the results collected in our experiments. First Table \ref{Res1} reports the performance of model, trained on 0.31m imagery, second table \ref{Res2} stands for model, trained on 0.5m imagery, both models were tested with corresponding resolution images from test regions. Third one \ref{Res3} presents the the performance of the latter model on satellite imagery. To assess the performance of proposed tree delineation approach quantitatively, \gls{IoU}, F1 score, number of trees and detection rate was calculated through comparison with the ground truth.
+
+Table \ref{Res1} presents the results obtained from the model, which was trained and tested on 0.31m resolution imagery. Although, deep CNNs learnt and performed better on higher resolution images, from the comparison of number of contours in ground truth and prediction it can be seen that the model tends to over-segment tree crowns. It may happen due to the changing vegetation indices inside the tree crown area. Visual observation shows that these predictions represent several main branches of individual large tree, rather than multiple small trees.
+
+
+\begin{table}[h]
+\caption{Model evaluation metrics for 0.31m resolution test images}
+\label{Res1}
+\vskip 0.15in
+\begin{center}
+\begin{small}
+\begin{sc}
+\begin{tabular}{lp{4cm}p{4cm}}
+\hline
+\textbf{Metric names} & \textbf{Score} & \\\hline
+\gls{IoU} &0.6  & \\
+F1 score &0.7  & \\\hline
+&\textbf{Ground truth}  & \textbf{Predicted mask}\\\hline
+Number of trees &7416  & 9036\\
+Tree detection rate &0.89  & \\\hline
+\end{tabular}
+\end{sc}
+\end{small}
+\end{center}
+\vskip -0.1in
+\end{table}
+
+The results of model, trained on 0.5m resolution RGB aerial imagery, is reported in Table \ref{Res2}. Overall performance of this model is slightly lower than the results, obtained from higher resolution. 
+
+\begin{table}[h]
+\caption{Model evaluation metrics for 0.5m resolution test images}
+\label{Res2}
+\vskip 0.15in
+\begin{center}
+\begin{small}
+\begin{sc}
+\begin{tabular}{lp{4cm}p{4cm}}
+\hline
+\textbf{Metric names} & \textbf{Score} & \\\hline
+\gls{IoU} &0.58  & \\
+F1 score &0.68  & \\\hline
+&\textbf{Ground truth}  & \textbf{Predicted mask}\\\hline
+Number of trees &7430  & 7816\\
+Tree detection rate &0.88  & \\\hline
+\end{tabular}
+\end{sc}
+\end{small}
+\end{center}
+\vskip -0.1in
+\end{table}
+
+\newpage
+Google Earth engine was used to download RGB images with different forest types across the Russia to test the model on real satellite imagery. Several samples were manually annotated by visual observation and interpretation of RGB images. The spatial resolution of downloaded data was 0.6m per pixel. Since all of the satellite test images were previously unseen by the model from completely different regions, applying the model, trained on 0.5m aerial dataset, controversial results were obtained. The model performed poorly on sparse forests, complex terrain, or high off-nadir images. However, on some samples the model did pretty good job. For instance, Table \ref{Res3} presents the performance of the model on deciduous forests from Perm region. An illustrative examples of the above-mentioned model predictions are presented in Appendix A. 
+
+\begin{table}[h]
+\caption{Model evaluation metrics for satellite RGB image from Perm}
+\label{Res3}
+\vskip 0.15in
+\begin{center}
+\begin{small}
+\begin{sc}
+\begin{tabular}{lp{4cm}p{4cm}}
+\hline
+\textbf{Metric names} & \textbf{Score} & \\\hline
+\gls{IoU} &0.42  & \\
+F1 score &0.72  & \\\hline
+&\textbf{Ground truth}  & \textbf{Predicted mask}\\\hline
+Number of trees &4014  & 3913\\
+Tree detection rate &0.89  & \\\hline
+\end{tabular}
+\end{sc}
+\end{small}
+\end{center}
+\vskip -0.1in
+\end{table}
+
+As it was addressed before, it is clear that accurate tree detection will be region specific, and that the model performance will change among environments, so there is need for more diverse datasets.
+Another issue here is the use of \gls{DSM}s for \gls{ITC} delineation, which were obtained using photogrammetry on RGB orthophotos. It requires a lot of workload and parameters tuning to obtain accurate delineations. \gls{LIDAR} data would significantly facilitate the process of tree delineation.
+if available, including \gls{LIDAR} \gls{CHM} into neural networks will likely allow the model to learn the altitudinal features of trees, in addition to the 2D color features in the RGB data, providing opportunities for multi-sensor modeling. These enhancements might be a key in segmenting the dense deciduous forests, where tree crowns overlap each other in 2D RGB imagery. 
+
+Overall, using the \gls{UAV}s for capturing local \gls{DEM} at high resolution and combining it with the tree delineation approaches will advance cost effective development of regional tree detection models. At the same time, there is increasing number of commercial sub-meter RGB data at large spatial extents, which could be used to detect and delineate \gls{ITC} at unprecedented extents.
